@@ -161,9 +161,10 @@ const Photo = () => {
   const handleUserMedia = () => {
     setLoading(false);
   };
-
+// Define video constraints
+  // Puedes ajustar la resolución.
    const videoConstraints = {
-    width: { ideal: 1280 },
+    width: { ideal: 1920 },
     height: { ideal: 720 },
     facingMode: "user"
   };
