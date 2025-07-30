@@ -162,6 +162,12 @@ const Photo = () => {
     setLoading(false);
   };
 
+   const videoConstraints = {
+    width: { ideal: 1280 },
+    height: { ideal: 720 },
+    facingMode: "user"
+  };
+
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-black overflow-hidden">
       {loading && (
@@ -178,7 +184,7 @@ const Photo = () => {
           className={`absolute top-0 left-0 w-full h-full object-cover scale-x-[-1] transition-opacity duration-500 ${
             loading ? "opacity-0" : "opacity-100"
           }`}
-          videoConstraints={{ facingMode: "user" }}
+          videoConstraints={videoConstraints}
           onUserMedia={handleUserMedia}
         />
       )}
