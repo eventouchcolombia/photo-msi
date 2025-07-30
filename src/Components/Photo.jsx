@@ -141,6 +141,7 @@ const Photo = () => {
           await uploadString(storageRef, imageData, "data_url");
           const url = await getDownloadURL(storageRef);
           console.log("✅ Imagen subida. URL pública:", url);
+           localStorage.setItem("capturedPhotoUrl", url);
         } catch (error) {
           console.error("❌ Error al subir la imagen:", error);
         }
