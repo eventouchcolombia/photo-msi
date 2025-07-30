@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { storage } from "../Firebase/firebaseConfig";
+
+
 
 const Photo = () => {
   const [loading, setLoading] = useState(true);
@@ -9,10 +13,16 @@ const Photo = () => {
   const [showPreparado, setShowPreparado] = useState(false);
   const [showFinalDragon, setShowFinalDragon] = useState(false);
   const [showDragon, setShowDragon] = useState(false); // 👈 Mostrar dragón después del conteo
+  const [hasCaptured, setHasCaptured] = useState(false);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const marcoRef = useRef(null);
+  const hasCapturedRef = useRef(false);
+
+  useEffect(() => {
+    hasCapturedRef.current = hasCaptured;
+  }, [hasCaptured]);
 
   const navigate = useNavigate();
 
@@ -21,27 +31,28 @@ const Photo = () => {
   };
 
   useEffect(() => {
-    if (!loading) {
-      setShowDragon(true); // 🐉 Mostrar dragon.gif
+  if (!loading && !hasCapturedRef.current) {
+    setShowDragon(true);
 
-      // ⏳ Después de 6 segundos, mostrar dragonfinal.png
-      const dragonTimer = setTimeout(() => {
+    const dragonTimer = setTimeout(() => {
+      if (!hasCapturedRef.current) {
         setShowFinalDragon(true);
         setShowDragon(false);
-        // 🧍 Mostrar "prepárate" por 2 segundos
-        setShowPreparado(true);
-        const preparadoTimer = setTimeout(() => {
-          setShowPreparado(false);
-          startCountdown(); // 🔢 Iniciar cuenta regresiva
-        }, 5000);
+      }
 
-        return () => clearTimeout(preparadoTimer);
-      }, 4258); // ⏱️ 6s de duración del gif
+      const preparadoTimer = setTimeout(() => {
+        setShowPreparado(false);
+        if (!hasCapturedRef.current) startCountdown();
+      }, 5000);
 
-      return () => clearTimeout(dragonTimer);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+      return () => clearTimeout(preparadoTimer);
+    }, 4258);
+
+    return () => clearTimeout(dragonTimer);
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [loading]);
+
 
   const startCountdown = () => {
     let count = 3;
@@ -53,10 +64,7 @@ const Photo = () => {
         setCountdown(null);
         capturePhoto();
 
-        // ✅ Cambiar a dragonfinal.png después de 6s
-        setTimeout(() => {
-          setShowFinalDragon(true);
-        }, 5300);
+       
       } else {
         setCountdown(count);
       }
@@ -104,13 +112,45 @@ const Photo = () => {
         context.drawImage(marco, 0, 0, canvas.width, canvas.height);
       }
 
-      const imageData = canvas.toDataURL("image/png");
-      setCapturedImage(imageData);
+      const dragonImg = new Image();
+      dragonImg.src = "/drangonfinal.png";
+      // medidas para el dragón
+      // 🐉 Ajusta las medidas según tu imagen
+      dragonImg.onload = async () => {
+        const dragonWidth = 630;
+        const dragonHeight = 1300;
+        const dragonRight = 220;
+        const dragonBottom = 128;
+
+        const x = canvasWidth - dragonRight - dragonWidth;
+        const y = canvasHeight - dragonBottom - dragonHeight;
+
+        context.drawImage(dragonImg, x, y, dragonWidth, dragonHeight);
+
+        const imageData = canvas.toDataURL("image/png");
+        setHasCaptured(true);
+        hasCapturedRef.current = true; 
+        setShowFinalDragon(false);
+        setCapturedImage(imageData);
+
+        // 🆙 Subir a Firebase
+        const imageName = `photo-${Date.now()}.png`;
+        const storageRef = ref(storage, `photos/${imageName}`);
+
+        try {
+          await uploadString(storageRef, imageData, "data_url");
+          const url = await getDownloadURL(storageRef);
+          console.log("✅ Imagen subida. URL pública:", url);
+        } catch (error) {
+          console.error("❌ Error al subir la imagen:", error);
+        }
+      };
     }
   };
 
   const handleRetakePhoto = () => {
     setCapturedImage(null);
+    setHasCaptured(false);
     setLoading(true);
     setShowDragon(false);
     setShowFinalDragon(false);
