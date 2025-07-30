@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 
 const Photo = () => {
@@ -14,35 +14,34 @@ const Photo = () => {
   const canvasRef = useRef(null);
   const marcoRef = useRef(null);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const handleNext = () => {
-  //   navigate("/form");
-  // };
+  const handleNext = () => {
+    navigate("/form");
+  };
 
- useEffect(() => {
-  if (!loading) {
-    setShowDragon(true); // 🐉 Mostrar dragon.gif
+  useEffect(() => {
+    if (!loading) {
+      setShowDragon(true); // 🐉 Mostrar dragon.gif
 
-    // ⏳ Después de 6 segundos, mostrar dragonfinal.png
-    const dragonTimer = setTimeout(() => {
-      setShowFinalDragon(true);
-      setShowDragon(false); 
-      // 🧍 Mostrar "prepárate" por 2 segundos
-      setShowPreparado(true);
-      const preparadoTimer = setTimeout(() => {
-        setShowPreparado(false);
-        startCountdown(); // 🔢 Iniciar cuenta regresiva
-      }, 5000);
+      // ⏳ Después de 6 segundos, mostrar dragonfinal.png
+      const dragonTimer = setTimeout(() => {
+        setShowFinalDragon(true);
+        setShowDragon(false);
+        // 🧍 Mostrar "prepárate" por 2 segundos
+        setShowPreparado(true);
+        const preparadoTimer = setTimeout(() => {
+          setShowPreparado(false);
+          startCountdown(); // 🔢 Iniciar cuenta regresiva
+        }, 5000);
 
-      return () => clearTimeout(preparadoTimer);
-    }, 4258); // ⏱️ 6s de duración del gif
+        return () => clearTimeout(preparadoTimer);
+      }, 4258); // ⏱️ 6s de duración del gif
 
-    return () => clearTimeout(dragonTimer);
-  }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [loading]);
-
+      return () => clearTimeout(dragonTimer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   const startCountdown = () => {
     let count = 3;
@@ -53,8 +52,6 @@ const Photo = () => {
         clearInterval(interval);
         setCountdown(null);
         capturePhoto();
-
-       
 
         // ✅ Cambiar a dragonfinal.png después de 6s
         setTimeout(() => {
@@ -112,13 +109,13 @@ const Photo = () => {
     }
   };
 
-  // const handleRetakePhoto = () => {
-  //   setCapturedImage(null);
-  //   setLoading(true);
-  //   setShowDragon(false);
-  //   setShowFinalDragon(false);
-  //   setMoveDragon(false);
-  // };
+  const handleRetakePhoto = () => {
+    setCapturedImage(null);
+    setLoading(true);
+    setShowDragon(false);
+    setShowFinalDragon(false);
+    //setMoveDragon(false);
+  };
 
   const handleUserMedia = () => {
     setLoading(false);
@@ -146,20 +143,20 @@ const Photo = () => {
       )}
 
       {/* 🐉 Mostrar el dragón después del conteo */}
-{showDragon && (
-          <img
-            src="/dragon3.gif"
-            alt="Dragón"
-            className="absolute z-40 bottom-32 right-[220px] w-[630px] h-[1400px] transition-all duration-1000"
-          />
-        )}
-        {showFinalDragon && (
-          <img
-            src="/drangonfinal.png"
-            alt="Dragón Final"
-            className="absolute z-40  bottom-32 right-[220px] w-[630px] h-[1300px] transition-all duration-1000"
-          />
-        )}
+      {showDragon && (
+        <img
+          src="/dragon3.gif"
+          alt="Dragón"
+          className="absolute z-40 bottom-32 right-[220px] w-[630px] h-[1400px] transition-all duration-1000"
+        />
+      )}
+      {showFinalDragon && (
+        <img
+          src="/drangonfinal.png"
+          alt="Dragón Final"
+          className="absolute z-40  bottom-32 right-[220px] w-[630px] h-[1300px] transition-all duration-1000"
+        />
+      )}
 
       <canvas ref={canvasRef} className="hidden" />
 
@@ -196,7 +193,25 @@ const Photo = () => {
         />
       )}
 
-      <div className="absolute bottom-96 w-full flex justify-center gap-20 z-50 pointer-events-auto"></div>
+      {capturedImage && (
+        <div className="absolute bottom-35 flex gap-72 z-50">
+          <button
+            onClick={handleRetakePhoto}
+            className="bg-purple-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+          >
+            <img src="/replay.png" alt="icono repetir" className="w-10 h-10" />
+            Repetir foto
+          </button>
+
+          <button
+            onClick={handleNext} // 👉 reemplaza con tu lógica de navegación
+            className="bg-purple-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+          >
+            <img src="/next.png" alt="icono siguiente" className="w-10 h-10" />
+            Siguiente
+          </button>
+        </div>
+      )}
     </div>
   );
 };
