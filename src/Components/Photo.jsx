@@ -14,17 +14,28 @@ const Photo = () => {
   const [showFinalDragon, setShowFinalDragon] = useState(false);
   const [showDragon, setShowDragon] = useState(false); // 👈 Mostrar dragón después del conteo
   const [hasCaptured, setHasCaptured] = useState(false);
+    const [dragonBig, setDragonBig] = useState(false);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const marcoRef = useRef(null);
   const hasCapturedRef = useRef(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (showDragon) {
+      // Cambia el tamaño después de 1.5 segundos (ajusta el tiempo si quieres)
+      const timer = setTimeout(() => setDragonBig(true), 2500);
+      return () => clearTimeout(timer);
+    } else {
+      setDragonBig(false); // Reinicia si se oculta el dragón
+    }
+  }, [showDragon]);
 
   useEffect(() => {
     hasCapturedRef.current = hasCaptured;
   }, [hasCaptured]);
 
-  const navigate = useNavigate();
 
   const handleNext = () => {
     navigate("/form");
@@ -46,7 +57,7 @@ const Photo = () => {
       }, 5000);
 
       return () => clearTimeout(preparadoTimer);
-    }, 4258);
+    }, 5580);
 
     return () => clearTimeout(dragonTimer);
   }
@@ -192,17 +203,21 @@ const Photo = () => {
 
       {/* 🐉 Mostrar el dragón después del conteo */}
       {showDragon && (
-        <img
+         <img
           src="/dragon3.gif"
           alt="Dragón"
-          className="absolute z-40 bottom-32 right-[220px] w-[630px] h-[1400px] transition-all duration-1000"
+          className={`absolute z-40 bottom-40 right-[0px] transition-all duration-[3000ms]
+            ${dragonBig
+              ? "w-[600px] h-[700px] right-[-20px]"
+              : "w-[1080px] h-[1400px]"
+            }`}
         />
       )}
       {showFinalDragon && (
         <img
           src="/drangonfinal.png"
           alt="Dragón Final"
-          className="absolute z-40  bottom-32 right-[220px] w-[630px] h-[1300px] transition-all duration-1000"
+          className="absolute z-40  bottom-24 right-[0px] w-[800px] h-[1400px] transition-all duration-1000"
         />
       )}
 
@@ -245,7 +260,7 @@ const Photo = () => {
         <div className="absolute bottom-35 flex gap-72 z-50">
           <button
             onClick={handleRetakePhoto}
-            className="bg-purple-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+            className="bg-black text-white px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
           >
             <img src="/replay.png" alt="icono repetir" className="w-10 h-10" />
             Repetir foto
@@ -253,7 +268,7 @@ const Photo = () => {
 
           <button
             onClick={handleNext} // 👉 reemplaza con tu lógica de navegación
-            className="bg-purple-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+            className="bg-black text-white px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
           >
             <img src="/next.png" alt="icono siguiente" className="w-10 h-10" />
             Siguiente
