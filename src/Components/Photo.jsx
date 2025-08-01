@@ -14,7 +14,8 @@ const Photo = () => {
   const [showFinalDragon, setShowFinalDragon] = useState(false);
   const [showDragon, setShowDragon] = useState(false); // 👈 Mostrar dragón después del conteo
   const [hasCaptured, setHasCaptured] = useState(false);
-    const [dragonBig, setDragonBig] = useState(false);
+  const [dragonBig, setDragonBig] = useState(false);
+    const [finalDragonVisible, setFinalDragonVisible] = useState(false);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -23,9 +24,18 @@ const Photo = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (showFinalDragon) {
+      // Espera un frame para activar el fade-in
+      setTimeout(() => setFinalDragonVisible(true), 10);
+    } else {
+      setFinalDragonVisible(false);
+    }
+  }, [showFinalDragon]);
+
+  useEffect(() => {
     if (showDragon) {
       // Cambia el tamaño después de 1.5 segundos (ajusta el tiempo si quieres)
-      const timer = setTimeout(() => setDragonBig(true), 2500);
+      const timer = setTimeout(() => setDragonBig(true), 3400);
       return () => clearTimeout(timer);
     } else {
       setDragonBig(false); // Reinicia si se oculta el dragón
@@ -57,7 +67,7 @@ const Photo = () => {
       }, 5000);
 
       return () => clearTimeout(preparadoTimer);
-    }, 5580);
+    }, 5000);
 
     return () => clearTimeout(dragonTimer);
   }
@@ -208,7 +218,7 @@ const Photo = () => {
           alt="Dragón"
           className={`absolute z-40 bottom-40 right-[0px] transition-all duration-[3000ms]
             ${dragonBig
-              ? "w-[600px] h-[700px] right-[-20px]"
+              ? "w-[600px] h-[600px] right-[-20px]"
               : "w-[1080px] h-[1400px]"
             }`}
         />
@@ -217,7 +227,11 @@ const Photo = () => {
         <img
           src="/drangonfinal.png"
           alt="Dragón Final"
-          className="absolute z-40  bottom-24 right-[0px] w-[800px] h-[1400px] transition-all duration-1000"
+          className={`
+            absolute z-40 bottom-24 right-[0px] w-[800px] h-[1400px]
+            transition-all duration-400
+            ${finalDragonVisible ? " translate-y-0" : "opacity-0 translate-y-10"}
+          `}
         />
       )}
 
