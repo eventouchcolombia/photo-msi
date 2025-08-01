@@ -140,7 +140,7 @@ const Photo = () => {
       dragonImg.onload = async () => {
         const dragonWidth = 630;
         const dragonHeight = 1300;
-        const dragonRight = 220;
+        const dragonRight = 0;
         const dragonBottom = 128;
 
         const x = canvasWidth - dragonRight - dragonWidth;
@@ -216,9 +216,9 @@ const Photo = () => {
          <img
           src="/dragon3.gif"
           alt="Dragón"
-          className={`absolute z-40 bottom-40 right-[0px] transition-all duration-[3000ms]
+          className={`absolute z-40 bottom-50 right-[0px] transition-all duration-[3000ms]
             ${dragonBig
-              ? "w-[600px] h-[600px] right-[-20px]"
+              ? "w-[600px] h-[600px] right-[-40px]"
               : "w-[1080px] h-[1400px]"
             }`}
         />
@@ -229,7 +229,7 @@ const Photo = () => {
           alt="Dragón Final"
           className={`
             absolute z-40 bottom-24 right-[0px] w-[800px] h-[1400px]
-            transition-all duration-400
+            transition-all duration-900
             ${finalDragonVisible ? " translate-y-0" : "opacity-0 translate-y-10"}
           `}
         />
