@@ -138,7 +138,7 @@ const Photo = () => {
       // medidas para el dragón
       // 🐉 Ajusta las medidas según tu imagen
       dragonImg.onload = async () => {
-        const dragonWidth = 630;
+        const dragonWidth = 800;
         const dragonHeight = 1300;
         const dragonRight = 0;
         const dragonBottom = 128;
