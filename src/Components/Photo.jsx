@@ -218,22 +218,23 @@ const Photo = () => {
           alt="Dragón"
           className={`absolute z-40 bottom-50 right-[0px] transition-all duration-[3000ms]
             ${dragonBig
-              ? "w-[600px] h-[600px] right-[-40px]"
+              ? "w-[370px] h-[650px] right-[-42px]"
               : "w-[1080px] h-[1400px]"
             }`}
         />
       )}
-      {showFinalDragon && (
-        <img
-          src="/drangonfinal.png"
-          alt="Dragón Final"
-          className={`
-            absolute z-40 bottom-24 right-[0px] w-[800px] h-[1400px]
-            transition-all duration-900
-            ${finalDragonVisible ? " translate-y-0" : "opacity-0 translate-y-10"}
-          `}
-        />
-      )}
+{showFinalDragon && (
+  <img
+    src="/drangonfinal.png"
+    alt="Dragón Final"
+    className={`
+      absolute z-40 bottom-24 right-0 w-[800px] h-[1400px]
+      transition-all duration-500 ease-out
+      ${finalDragonVisible ? "opacity-100 " : "opacity-0 "}
+    `}
+  />
+)}
+
 
       <canvas ref={canvasRef} className="hidden" />
 
