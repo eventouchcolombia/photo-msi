@@ -189,15 +189,15 @@ const Photo = () => {
   // Define video constraints
   // Puedes ajustar la resolución.
   const videoConstraints = {
-    width: { ideal: 1920 },
-    height: { ideal: 720 },
+    width: { ideal: 1080 },
+    height: { ideal: 1920 },
     facingMode: "user",
   };
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-black overflow-hidden">
       {flash && (
-        <div className="absolute top-0 left-0 w-full h-full bg-white/40 z-[999] opacity-80 transition-opacity duration-400 pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-white/30 z-[999] opacity-80 transition-opacity duration-400 pointer-events-none"></div>
       )}
 
       {loading && (
