@@ -4,8 +4,6 @@ import Webcam from "react-webcam";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { storage } from "../Firebase/firebaseConfig";
 
-
-
 const Photo = () => {
   const [loading, setLoading] = useState(true);
   const [countdown, setCountdown] = useState(null);
@@ -15,7 +13,8 @@ const Photo = () => {
   const [showDragon, setShowDragon] = useState(false); // 👈 Mostrar dragón después del conteo
   const [hasCaptured, setHasCaptured] = useState(false);
   const [dragonBig, setDragonBig] = useState(false);
-    const [finalDragonVisible, setFinalDragonVisible] = useState(false);
+  const [finalDragonVisible, setFinalDragonVisible] = useState(false);
+  const [flash, setFlash] = useState(false);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -46,34 +45,33 @@ const Photo = () => {
     hasCapturedRef.current = hasCaptured;
   }, [hasCaptured]);
 
-
   const handleNext = () => {
     navigate("/form");
   };
 
   useEffect(() => {
-  if (!loading && !hasCapturedRef.current) {
-    setShowDragon(true);
+    if (!loading && !hasCapturedRef.current) {
+      setShowDragon(true);
 
-    const dragonTimer = setTimeout(() => {
-      if (!hasCapturedRef.current) {
-        setShowFinalDragon(true);
-        setShowDragon(false);
-      }
+      const dragonTimer = setTimeout(() => {
+        if (!hasCapturedRef.current) {
+          setShowFinalDragon(true);
+          setShowDragon(false);
+          setShowPreparado(true);
+        }
 
-      const preparadoTimer = setTimeout(() => {
-        setShowPreparado(false);
-        if (!hasCapturedRef.current) startCountdown();
+        const preparadoTimer = setTimeout(() => {
+          setShowPreparado(false);
+          if (!hasCapturedRef.current) startCountdown();
+        }, 5000);
+
+        return () => clearTimeout(preparadoTimer);
       }, 5000);
 
-      return () => clearTimeout(preparadoTimer);
-    }, 5000);
-
-    return () => clearTimeout(dragonTimer);
-  }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [loading]);
-
+      return () => clearTimeout(dragonTimer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   const startCountdown = () => {
     let count = 3;
@@ -84,8 +82,6 @@ const Photo = () => {
         clearInterval(interval);
         setCountdown(null);
         capturePhoto();
-
-       
       } else {
         setCountdown(count);
       }
@@ -133,6 +129,14 @@ const Photo = () => {
         context.drawImage(marco, 0, 0, canvas.width, canvas.height);
       }
 
+      // 🔊 Reproducir sonido de cámara
+      const shutterSound = new Audio("/camera-shutter.mp3");
+      shutterSound.play();
+
+      // 💥 Efecto de flash
+      setFlash(true); // activar
+      setTimeout(() => setFlash(false), 150); // desactivar rápido
+
       const dragonImg = new Image();
       dragonImg.src = "/drangonfinal.png";
       // medidas para el dragón
@@ -150,7 +154,7 @@ const Photo = () => {
 
         const imageData = canvas.toDataURL("image/png");
         setHasCaptured(true);
-        hasCapturedRef.current = true; 
+        hasCapturedRef.current = true;
         setShowFinalDragon(false);
         setCapturedImage(imageData);
 
@@ -162,7 +166,7 @@ const Photo = () => {
           await uploadString(storageRef, imageData, "data_url");
           const url = await getDownloadURL(storageRef);
           console.log("✅ Imagen subida. URL pública:", url);
-           localStorage.setItem("capturedPhotoUrl", url);
+          localStorage.setItem("capturedPhotoUrl", url);
         } catch (error) {
           console.error("❌ Error al subir la imagen:", error);
         }
@@ -182,16 +186,20 @@ const Photo = () => {
   const handleUserMedia = () => {
     setLoading(false);
   };
-// Define video constraints
+  // Define video constraints
   // Puedes ajustar la resolución.
-   const videoConstraints = {
-    width: { ideal: 1920 },
-    height: { ideal: 720 },
-    facingMode: "user"
+  const videoConstraints = {
+    width: { ideal: 1080 },
+    height: { ideal: 1920 },
+    facingMode: "user",
   };
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-black overflow-hidden">
+      {flash && (
+        <div className="absolute top-0 left-0 w-full h-full bg-white/30 z-[999] opacity-80 transition-opacity duration-400 pointer-events-none"></div>
+      )}
+
       {loading && (
         <img
           src="/loading.gif"
@@ -213,28 +221,28 @@ const Photo = () => {
 
       {/* 🐉 Mostrar el dragón después del conteo */}
       {showDragon && (
-         <img
+        <img
           src="/dragon3.gif"
           alt="Dragón"
           className={`absolute z-40 bottom-50 right-[0px] transition-all duration-[3000ms]
-            ${dragonBig
-              ? "w-[370px] h-[650px] right-[-42px]"
-              : "w-[1080px] h-[1400px]"
+            ${
+              dragonBig
+                ? "w-[370px] h-[650px] right-[-42px]"
+                : "w-[1080px] h-[1400px]"
             }`}
         />
       )}
-{showFinalDragon && (
-  <img
-    src="/drangonfinal.png"
-    alt="Dragón Final"
-    className={`
+      {showFinalDragon && (
+        <img
+          src="/drangonfinal.png"
+          alt="Dragón Final"
+          className={`
       absolute z-40 bottom-24 right-0 w-[800px] h-[1400px]
       transition-all duration-500 ease-out
       ${finalDragonVisible ? "opacity-100 " : "opacity-0 "}
     `}
-  />
-)}
-
+        />
+      )}
 
       <canvas ref={canvasRef} className="hidden" />
 

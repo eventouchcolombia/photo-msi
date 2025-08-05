@@ -25,30 +25,34 @@ const Form = () => {
         {photoUrl && (
           <>
             {/* Solo esta imagen se imprimirá */}
-            <img
-              src={photoUrl}
-              alt="Foto capturada"
-              className="w-[80%] max-w-[600px] h-auto border rounded-lg printable"
-            />
-             <QRCode value={photoUrl} size={200} />
+            <div className="flex flex-row items-center gap-10 printable">
+              <img
+                src={photoUrl}
+                alt="Foto capturada"
+                className="w-[80%] max-w-[400px] h-auto border rounded-lg printable"
+              />
+              <QRCode value={photoUrl} size={200} />
+            </div>
             {/* Botón para imprimir (no se mostrará en la impresión) */}
-            <button
-              onClick={() => window.electronAPI?.print?.()}
-              // onClick={() => window.print()}
-              className="bg-white text-black px-6 py-3 w-80 rounded-lg text-2xl font-bold print:hidden"
-            >
-              Imprimir foto
-            </button>
+            <div className="flex flex-row items-center gap-10 mt-8">
+              <button
+                onClick={() => window.electronAPI?.print?.()}
+                // onClick={() => window.print()}
+                className="bg-white text-black px-6 py-3 w-80 rounded-lg text-2xl font-bold print:hidden"
+              >
+                Imprimir foto
+              </button>
+              <button
+                onClick={() => navigate("/")}
+                className="bg-purple-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold print:hidden"
+              >
+                Volver
+              </button>
+            </div>
           </>
         )}
 
         {/* Botón volver (no se imprimirá) */}
-        <button
-          onClick={() => navigate("/")}
-          className="bg-purple-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold print:hidden"
-        >
-          Volver
-        </button>
       </div>
 
       {/* Estilos específicos para impresión */}
