@@ -29,7 +29,8 @@ mainWindow.webContents.print({
   pageSize: {
     width: 100000,  // 100 mm = 10 cm
     height: 150000  // 150 mm = 15 cm
-  }
+  },
+  dpi: 300
 });
 });
 
