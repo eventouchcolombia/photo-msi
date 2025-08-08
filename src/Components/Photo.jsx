@@ -189,10 +189,21 @@ const Photo = () => {
   // Define video constraints
   // Puedes ajustar la resolución.
   const videoConstraints = {
-    width: { ideal: 1080 },
-    height: { ideal: 1920 },
-    facingMode: "user",
-  };
+  width: { ideal: 720, max: 1080 },
+  height: { ideal: 1280, max: 1920 },
+  frameRate: { ideal: 30, max: 30 },
+  facingMode: "user"
+};
+// otra opcion 👇🏻
+
+// const videoConstraints = {
+//   width: { ideal: 640 },
+//   height: { ideal: 960 },
+//   frameRate: { ideal: 30, max: 30 },
+//   facingMode: "user"
+// };
+
+
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-black overflow-hidden">
