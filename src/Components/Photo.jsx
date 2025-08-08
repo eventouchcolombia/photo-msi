@@ -251,7 +251,7 @@ const Photo = () => {
           ref={marcoRef}
           src="/marco.png"
           alt="Marco"
-          className="absolute w-full h-full pointer-events-none"
+          className="absolute w-full h-full pointer-events-none z-50"
         />
       )}
 
@@ -283,15 +283,15 @@ const Photo = () => {
         <div className="absolute bottom-35 flex gap-72 z-50">
           <button
             onClick={handleRetakePhoto}
-            className="bg-black text-white px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+            className="bg-gray-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
           >
-            <img src="/replay.png" alt="icono repetir" className="w-10 h-10" />
+            {/* <img src="/replay.png" alt="icono repetir" className="w-10 h-10" /> */}
             Repetir foto
           </button>
 
           <button
             onClick={handleNext} // 👉 reemplaza con tu lógica de navegación
-            className="bg-black text-white px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+            className="bg-gray-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
           >
             <img src="/next.png" alt="icono siguiente" className="w-10 h-10" />
             Siguiente
