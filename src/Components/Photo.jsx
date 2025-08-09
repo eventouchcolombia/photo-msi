@@ -130,7 +130,7 @@ const Photo = () => {
       }
 
       // 🔊 Reproducir sonido de cámara
-      const shutterSound = new Audio("/camera-shutter.mp3");
+      const shutterSound = new Audio("camera-shutter.mp3");
       shutterSound.play();
 
       // 💥 Efecto de flash
@@ -138,7 +138,7 @@ const Photo = () => {
       setTimeout(() => setFlash(false), 150); // desactivar rápido
 
       const dragonImg = new Image();
-      dragonImg.src = "/drangonfinal.png";
+      dragonImg.src = "drangonfinal.png";
       // medidas para el dragón
       // 🐉 Ajusta las medidas según tu imagen
       dragonImg.onload = async () => {
@@ -213,7 +213,7 @@ const Photo = () => {
 
       {loading && (
         <img
-          src="/loading.gif"
+          src="loading.gif"
           alt="Cargando..."
           className="absolute w-24 h-24 animate-spin"
         />
@@ -233,7 +233,7 @@ const Photo = () => {
       {/* 🐉 Mostrar el dragón después del conteo */}
       {showDragon && (
         <img
-          src="/dragon3.gif"
+          src="dragon3.gif"
           alt="Dragón"
           className={`absolute z-40 bottom-50 right-[0px] transition-all duration-[3000ms]
             ${
@@ -245,7 +245,7 @@ const Photo = () => {
       )}
       {showFinalDragon && (
         <img
-          src="/drangonfinal.png"
+          src="drangonfinal.png"
           alt="Dragón Final"
           className={`
       absolute z-40 bottom-24 right-0 w-[800px] h-[1400px]
@@ -260,7 +260,7 @@ const Photo = () => {
       {!capturedImage && (
         <img
           ref={marcoRef}
-          src="/marco.png"
+          src="marco.png"
           alt="Marco"
           className="absolute w-full h-full pointer-events-none z-50"
         />
@@ -268,7 +268,7 @@ const Photo = () => {
 
       {showPreparado && (
         <img
-          src="/preparate.png"
+          src="preparate.png"
           alt="Prepárate"
           className="absolute z-50 top-[15%] w-96 h-auto"
         />
@@ -276,7 +276,7 @@ const Photo = () => {
 
       {countdown !== null && (
         <img
-          src={`/${countdown}.png`}
+          src={`${countdown}.png`}
           alt={`Cuenta regresiva ${countdown}`}
           className="absolute mt-[-1000px] w-20 h-20 z-50"
         />
@@ -304,7 +304,7 @@ const Photo = () => {
             onClick={handleNext} // 👉 reemplaza con tu lógica de navegación
             className="bg-gray-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
           >
-            <img src="/next.png" alt="icono siguiente" className="w-10 h-10" />
+            <img src="next.png" alt="icono siguiente" className="w-10 h-10" />
             Siguiente
           </button>
         </div>

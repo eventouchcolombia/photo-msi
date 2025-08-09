@@ -2,7 +2,7 @@ import './App.css'
 import Welcome from './Components/Welcome'
 import Photo from './Components/Photo'
 import Form from './Components/Form'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
   return (

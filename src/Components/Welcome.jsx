@@ -9,7 +9,7 @@ const Welcome = () => {
       onClick={() => navigate('/photo')}
     >
       <img
-        src="/Welcome.png"
+        src="Welcome.png"
         alt="Welcome to the Photobooth"
         className="absolute inset-0 w-full h-full object-cover  pointer-events-none"
       />
