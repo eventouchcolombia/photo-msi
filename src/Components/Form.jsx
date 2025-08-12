@@ -29,18 +29,14 @@ const Form = () => {
         {photoUrl && (
           <>
             {/* Solo esta imagen se imprimirá */}
-            <div className="flex flex-row items-center gap-20 printable bg-black/60 px-10 py-10 w-[80%] h-[40%] rounded-xl shadow-2xl mt-32">
-              <div className="flex justify-center items-center w-[50%]">
-                <img
-                  src={photoUrl}
-                  alt="Foto capturada"
-                  className="max-w-full h-auto border rounded-lg"
-                />
-              </div>
-              <div className="flex justify-center items-center w-[50%]">
-                <QRCode value={photoUrl} size={300} />
-              </div>
-            </div>
+            <div className="flex flex-row items-center gap-10 printable">
+            <img
+              src={photoUrl}
+              alt="Foto capturada"
+              className="w-[80%] max-w-[600px] h-auto border rounded-lg printable"
+            />
+             <QRCode value={photoUrl} size={300} />
+             </div>
 
             {/* Botón para imprimir (no se mostrará en la impresión) */}
             <div className="flex flex-row items-center gap-20 mt-44">
