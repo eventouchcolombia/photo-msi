@@ -144,7 +144,7 @@ const Photo = () => {
       dragonImg.onload = async () => {
         const dragonWidth = 800;
         const dragonHeight = 1300;
-        const dragonRight = 0;
+        const dragonRight = 110;
         const dragonBottom = 128;
 
         const x = canvasWidth - dragonRight - dragonWidth;
@@ -235,11 +235,11 @@ const Photo = () => {
         <img
           src="dragon3.gif"
           alt="Dragón"
-          className={`absolute z-40 bottom-50 right-[0px] transition-all duration-[3000ms]
+          className={`absolute z-40 bottom-50 right-[110px] transition-all duration-[3000ms]
             ${
               dragonBig
-                ? "w-[370px] h-[650px] right-[-42px]"
-                : "w-[1080px] h-[1400px]"
+                ? "w-[370px] h-[650px] right-[-110px]"
+                : "w-[850px] h-[1400px] right-[120px]"
             }`}
         />
       )}
@@ -248,7 +248,7 @@ const Photo = () => {
           src="drangonfinal.png"
           alt="Dragón Final"
           className={`
-      absolute z-40 bottom-24 right-0 w-[800px] h-[1400px]
+      absolute z-40 bottom-24 right-[110px] w-[800px] h-[1400px]
       transition-all duration-500 ease-out
       ${finalDragonVisible ? "opacity-100 " : "opacity-0 "}
     `}
@@ -291,10 +291,10 @@ const Photo = () => {
       )}
 
       {capturedImage && (
-        <div className="absolute bottom-35 flex gap-72 z-50">
+        <div className="absolute bottom-52 flex gap-44 z-50 ">
           <button
             onClick={handleRetakePhoto}
-            className="bg-gray-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+            className="bg-black/90  border-2 border-[#C00F03] text-white px-6 py-3 w-66 rounded-3xl text-4xl font-bold flex items-center justify-center gap-4"
           >
             {/* <img src="/replay.png" alt="icono repetir" className="w-10 h-10" /> */}
             Repetir foto
@@ -302,9 +302,9 @@ const Photo = () => {
 
           <button
             onClick={handleNext} // 👉 reemplaza con tu lógica de navegación
-            className="bg-gray-400 text-black px-6 py-3 w-80 rounded-lg text-4xl font-bold flex items-center justify-center gap-4"
+            className="bg-black/90 border-2 border-[#93B63F] text-white px-6 py-3 w-66 rounded-3xl  text-4xl font-bold flex items-center justify-center gap-4"
           >
-            <img src="next.png" alt="icono siguiente" className="w-10 h-10" />
+            {/* <img src="next.png" alt="icono siguiente" className="w-10 h-10" /> */}
             Siguiente
           </button>
         </div>
