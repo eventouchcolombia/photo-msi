@@ -13,9 +13,13 @@ app.whenReady().then(() => {
     }
   });
 
-  // Carga el index.html generado por React (vite o CRA)
-  mainWindow.loadURL('http://localhost:5173'); // cambiá el puerto si usás otro
-
+  if (app.isPackaged) {
+    // Producción: carga el archivo HTML empaquetado
+    mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'));
+  } else {
+    // Desarrollo: carga el servidor de Vite
+    mainWindow.loadURL('http://localhost:5173');
+  }
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

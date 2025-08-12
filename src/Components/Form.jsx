@@ -16,7 +16,7 @@ const Form = () => {
   return (
     <div className="form-container relative w-screen h-screen flex items-center justify-center bg-[url('/bgblack.jpg')] bg-cover bg-center print:bg-white">
       <img
-        src="/Welcome.png"
+        src="Welcome.png"
         alt="Background Form"
         className="absolute inset-0 w-full h-full object-cover z-0 print:hidden"
       />
