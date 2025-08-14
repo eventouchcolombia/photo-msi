@@ -16,15 +16,13 @@ const Form = () => {
   return (
     <div className="form-container relative w-screen h-screen flex items-center justify-center bg-[url('/bgblack.jpg')] bg-cover bg-center print:bg-white">
       <img
-        src="Welcome.png"
+        src="fondo photobooth 3.jpg"
         alt="Background Form"
         className="absolute inset-0 w-full h-full object-cover z-0 print:hidden"
       />
 
       <div className="relative z-10 flex flex-col items-center gap-10 w-full h-full justify-center">
-        <h2 className="text-white text-6xl font-semibold text-center mt-32">
-          ¡Genial! Escanea el QR  e imprime tu foto.
-        </h2>
+     
 
         {photoUrl && (
           <>
