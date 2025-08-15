@@ -80,11 +80,12 @@ const Trivia = () => {
   const handleRespuesta = (idx) => {
     setRespuestaSeleccionada(idx);
     if (idx === preguntasSeleccionadas[vista].correcta) {
-      setScore(score + 1);
+      setScore((prev) => prev + 1);
     }
     setTimeout(() => {
+      // Limpia selección y avanza a la siguiente pregunta
       setRespuestaSeleccionada(null);
-      setVista(vista + 1);
+      setVista((prev) => prev + 1);
     }, 700);
   };
 
@@ -122,10 +123,10 @@ const Trivia = () => {
           {preguntaActual.pregunta}
         </h2>
 
-        <div className="flex flex-col gap-20 ">
+        <div className="flex flex-col gap-20 " key={vista}>
           {preguntaActual.respuestas.map((resp, idx) => (
             <div
-              key={idx}
+              key={`${vista}-${idx}`}
               className={`cursor-pointer h-30 mt-3 py-8 px-6 rounded-2xl  text-5xl  transition-all border-2 border-red-600 justify-center
                 ${
                   respuestaSeleccionada === idx
