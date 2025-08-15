@@ -97,10 +97,10 @@ const Trivia = () => {
           Respuestas correctas: <span className="font-bold">{score}</span> de 3
         </p>
         <button
-          className="bg-[#DD0209] text-white text-4xl px-8 py-3 rounded-4xl hover:scale-105 transition-transform shadow-[0_0_10px_#DD0209,0_0_60px_#DD0209]"
+          className="bg-[#DD0209] text-white text-5xl mt-8 px-8 py-3 rounded-2xl"
           onClick={() => navigate("/")}
         >
-          Volver a inicio
+          Volver al inicio
         </button>
       </div>
     );
@@ -126,11 +126,11 @@ const Trivia = () => {
           {preguntaActual.respuestas.map((resp, idx) => (
             <div
               key={idx}
-              className={`cursor-pointer h-30 mt-3 py-4 px-6 rounded-2xl  text-5xl  transition-all border-2 border-red-600 justify-center
+              className={`cursor-pointer h-30 mt-3 py-8 px-6 rounded-2xl  text-5xl  transition-all border-2 border-red-600 justify-center
                 ${
                   respuestaSeleccionada === idx
                     ? idx === preguntaActual.correcta
-                      ? "bg-green-600"
+                      ? "bg-green-700"
                       : "bg-red-600"
                     : " hover:bg-[#DD0209] hover:text-white"
                 }
