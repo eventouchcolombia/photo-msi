@@ -26,15 +26,19 @@ const Form = () => {
 
         {photoUrl && (
           <>
-            {/* Solo esta imagen se imprimirá */}
-            <div className="flex flex-row items-center gap-10 printable">
-            <img
-              src={photoUrl}
-              alt="Foto capturada"
-              className="w-[80%] max-w-[600px] h-auto border rounded-lg printable"
-            />
-             <QRCode value={photoUrl} size={300} />
-             </div>
+            {/* Solo la imagen debe estar dentro de .printable para la impresión */}
+            <div className="flex flex-row mt-100 items-center gap-10">
+              <div className="printable">
+                <img
+                  src={photoUrl}
+                  alt="Foto capturada"
+                  className="w-64 md:w-80 lg:w-[28rem] h-auto border rounded-lg"
+                />
+              </div>
+              <div className="print:hidden">
+                <QRCode value={photoUrl} size={300} />
+              </div>
+            </div>
 
             {/* Botón para imprimir (no se mostrará en la impresión) */}
             <div className="flex flex-row items-center gap-20 mt-44">
@@ -65,6 +69,7 @@ const Form = () => {
             @page {
               size: 4in 6in; /* 10x15 cm en pulgadas */
               margin: 0;
+              bleed: 0;
             }
 
             body * {
@@ -75,8 +80,8 @@ const Form = () => {
               position: absolute;
               top: 0;
               left: 0;
-              width: 100vw;
-              height: 100vh;
+              width: 100%;
+              height: 100%;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -84,13 +89,24 @@ const Form = () => {
               background: white;
               padding: 0;
               margin: 0;
+              gap: 0 !important;
+            }
+
+            /* Asegura que los hijos del área imprimible también sean visibles */
+            .printable * {
+              visibility: visible;
             }
 
             .printable img {
-              max-width: 100%;
-              max-height: 100%;
+              width: 100% !important;
+              height: 100% !important;
+              max-width: none;
+              max-height: none;
               object-fit: contain;
               image-rendering: high-quality;
+              border: none !important;
+              border-radius: 0 !important;
+
             }
           }
         `}

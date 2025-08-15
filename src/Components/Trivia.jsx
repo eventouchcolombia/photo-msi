@@ -91,13 +91,13 @@ const Trivia = () => {
   if (vista >= 3) {
     // Vista de resultado
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-black text-white  ">
-        <h2 className="text-4xl mb-6">¡Trivia terminada!</h2>
-        <p className="text-2xl mb-8">
+      <div className="flex flex-col items-center justify-center h-screen bg-[url('/fondoScore.jpg')] bg-cover bg-center text-white  ">
+        <h2 className="text-7xl mb-6">¡Trivia terminada!</h2>
+        <p className="text-4xl mb-8">
           Respuestas correctas: <span className="font-bold">{score}</span> de 3
         </p>
         <button
-          className="bg-[#DD0209] text-white text-2xl px-8 py-3 rounded-4xl hover:scale-105 transition-transform shadow-[0_0_10px_#DD0209,0_0_60px_#DD0209]"
+          className="bg-[#DD0209] text-white text-4xl px-8 py-3 rounded-4xl hover:scale-105 transition-transform shadow-[0_0_10px_#DD0209,0_0_60px_#DD0209]"
           onClick={() => navigate("/")}
         >
           Volver a inicio
@@ -109,7 +109,7 @@ const Trivia = () => {
   const preguntaActual = preguntasSeleccionadas[vista];
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-[url('/bgTrivia.jpg')] bg-cover bg-center text-white">
+    <div className="flex flex-col items-center justify-center h-screen bg-[url('/fondoScore.jpg')] bg-cover bg-center text-white">
       <div className="p-8 rounded-3xl shadow-lg w-4/5 h-[50%]   text-center mb-120">
         <h2
           className="
@@ -122,11 +122,11 @@ const Trivia = () => {
           {preguntaActual.pregunta}
         </h2>
 
-        <div className="flex flex-col gap-36 ">
+        <div className="flex flex-col gap-20 ">
           {preguntaActual.respuestas.map((resp, idx) => (
             <div
               key={idx}
-              className={`cursor-pointer  mt-3 py-4 px-6 rounded-2xl  text-5xl  transition-all
+              className={`cursor-pointer h-30 mt-3 py-4 px-6 rounded-2xl  text-5xl  transition-all border-2 border-red-600 justify-center
                 ${
                   respuestaSeleccionada === idx
                     ? idx === preguntaActual.correcta
