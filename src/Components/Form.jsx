@@ -41,17 +41,17 @@ const Form = () => {
             </div>
 
             {/* Botón para imprimir (no se mostrará en la impresión) */}
-            <div className="flex flex-row items-center gap-20 mt-44">
+            <div className="flex flex-row items-center gap-20 mt-35">
               <button
                 onClick={() => window.electronAPI?.print?.()}
                 // onClick={() => window.print()}
-                className="bg-gray-400 text-black px-6 py-3 w-96 rounded-xl text-5xl font-bold print:hidden"
+                className="bg-black/50 text-white px-6 py-3 w-96 rounded-xl text-5xl font-bold print:hidden"
               >
                 Imprimir foto
               </button>
               <button
                 onClick={() => navigate("/")}
-                className="bg-gray-400 text-black px-6 py-3 w-80 rounded-xl text-5xl font-bold print:hidden"
+                className="bg-black/50 text-white px-6 py-3 w-80 rounded-xl text-5xl font-bold print:hidden"
               >
                 Reiniciar
               </button>
